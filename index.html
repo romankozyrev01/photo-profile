@@ -3,36 +3,54 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Portrait Photography Portfolio</title>
+    <title>Roman Kozyrev Photography</title>
     <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Montserrat:wght@300;400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Montserrat:wght@200;300;400;500;600&display=swap"
       rel="stylesheet"
     />
     <link
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
     />
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
-    />
+
     <style>
       :root {
-        --primary-color: #2c2c2c;
-        --secondary-color: #5c5c5c;
-        --accent-color: #bfa376;
-        --bg-color: #f9f8f6;
-        --card-bg: #ffffff;
+        --primary-color: #1a1a1a;
+        --secondary-color: #4a4a4a;
+        --accent-color: #c9a87c;
+        --bg-color: #f8f7f5;
+        --bg-color-dark: #0a0a0a;
+        --text-color-dark: #f5f5f5;
+        --secondary-color-dark: #a0a0a0;
+        --glass-bg: rgba(255, 255, 255, 0.1);
+        --glass-border: rgba(255, 255, 255, 0.2);
+        --transition-slow: 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        --transition-fast: 0.3s ease;
+      }
+
+      .dark-mode {
+        --primary-color: #f5f5f5;
+        --secondary-color: #a0a0a0;
+        --bg-color: #0a0a0a;
+        --glass-bg: rgba(255, 255, 255, 0.05);
+        --glass-border: rgba(255, 255, 255, 0.1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
       }
 
       body {
-        margin: 0;
-        padding: 0;
         background-color: var(--bg-color);
         font-family: "Montserrat", sans-serif;
         color: var(--primary-color);
-        min-height: 100vh;
+        line-height: 1.6;
+        overflow-x: hidden;
+        transition:
+          background-color var(--transition-slow),
+          color var(--transition-slow);
       }
 
       .poster-container {
@@ -41,402 +59,838 @@
         background-color: var(--bg-color);
         position: relative;
         overflow: hidden;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
         display: flex;
         flex-direction: column;
       }
 
-      /* Header Section */
-      .header {
-        padding: 40px 50px 20px;
-        text-align: left;
+      .dark-mode .poster-container {
+        background-color: var(--bg-color-dark);
+      }
+
+      .dark-mode {
+        color: var(--text-color-dark);
+      }
+
+      .dark-mode .header,
+      .dark-mode .brand-name,
+      .dark-mode .brand-tagline,
+      .dark-mode .copyright {
+        color: var(--text-color-dark);
+      }
+
+      .dark-mode .nav-item,
+      .dark-mode .secondary-color {
+        color: var(--secondary-color-dark);
+      }
+
+      .dark-mode .bento-item {
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+      }
+
+      .dark-mode .social-icons,
+      .dark-mode .material-icons {
+        color: var(--secondary-color-dark);
+      }
+
+      .dark-mode .lightbox-close,
+      .dark-mode .lightbox-nav {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: var(--text-color-dark);
+      }
+
+      .dark-mode .lightbox-close:hover,
+      .dark-mode .lightbox-nav:hover {
+        background-color: var(--accent-color);
+        color: white;
+      }
+
+      .dark-mode .scroll-progress {
+        background-color: var(--accent-color);
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.2);
+        }
+      }
+
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(60px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes zoomIn {
+        from {
+          opacity: 0;
+          transform: scale(0.8);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      .animate-slide-up {
+        opacity: 0;
+        animation: slideUp 0.8s ease forwards;
+      }
+
+      .animate-fade-in {
+        opacity: 0;
+        animation: fadeIn 0.6s ease forwards;
+      }
+
+      .animate-zoom-in {
+        opacity: 0;
+        animation: zoomIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+      }
+
+      .delay-100 {
+        animation-delay: 0.1s;
+      }
+      .delay-200 {
+        animation-delay: 0.2s;
+      }
+      .delay-300 {
+        animation-delay: 0.3s;
+      }
+      .delay-400 {
+        animation-delay: 0.4s;
+      }
+      .delay-500 {
+        animation-delay: 0.5s;
+      }
+
+      .visible {
+        opacity: 1 !important;
+      }
+
+      body:not(.dark-mode) .header {
         background-color: transparent;
-        z-index: 10;
-        position: relative;
+      }
+
+      body.dark-mode .header {
+        background-color: rgba(10, 10, 10, 0.8);
+      }
+
+      @keyframes tilt {
+        0% {
+          transform: perspective(1000px) rotateX(var(--rotateX))
+            rotateY(var(--rotateY));
+        }
+        100% {
+          transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+        }
+      }
+
+      .scroll-progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--accent-color), #d4b896);
+        z-index: 9999;
+        transition: width 0.1s ease;
+      }
+
+      .dark-mode .scroll-progress {
+        background: linear-gradient(90deg, var(--accent-color), #d4b896);
+      }
+
+      .loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--bg-color);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 100000;
+        transition:
+          opacity 0.8s ease,
+          visibility 0.8s ease;
+      }
+
+      .loading-screen.hidden {
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      .loading-logo {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 48px;
+        font-weight: 500;
+        letter-spacing: 2px;
+        color: var(--primary-color);
+        margin-bottom: 30px;
+        opacity: 0;
+        animation: fadeIn 1s ease forwards;
+      }
+
+      .loading-bar {
+        width: 200px;
+        height: 2px;
+        background-color: rgba(201, 168, 124, 0.2);
+        border-radius: 2px;
+        overflow: hidden;
+      }
+
+      .loading-progress {
+        width: 0%;
+        height: 100%;
+        background-color: var(--accent-color);
+        animation: loadingProgress 2s ease forwards;
+      }
+
+      @keyframes loadingProgress {
+        0% {
+          width: 0%;
+        }
+        100% {
+          width: 100%;
+        }
+      }
+
+      .dark-mode .loading-screen {
+        background-color: var(--bg-color-dark);
+      }
+
+      .dark-mode .loading-logo {
+        color: var(--text-color-dark);
+      }
+
+      body:not(.dark-mode) .header {
+        background: rgba(248, 247, 245, 0.8);
+      }
+
+      body.dark-mode .header {
+        background: rgba(10, 10, 10, 0.85);
+      }
+
+      .header {
+        padding: 50px 60px 30px;
+        background: rgba(248, 247, 245, 0.8);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        z-index: 100;
+        position: sticky;
+        top: 0;
+        transition: all var(--transition-slow);
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        border-bottom: 1px solid rgba(201, 168, 124, 0.1);
+      }
+
+      .header.scrolled {
+        padding: 30px 60px 20px;
+        background: rgba(248, 247, 245, 0.95);
+        backdrop-filter: blur(30px);
+        -webkit-backdrop-filter: blur(30px);
+      }
+
+      .dark-mode .header.scrolled {
+        background: rgba(10, 10, 10, 0.95);
       }
 
       .brand-name {
         font-family: "Cormorant Garamond", serif;
-        font-size: 52px;
-        font-weight: 600;
-        letter-spacing: 1px;
+        font-size: 56px;
+        font-weight: 500;
+        letter-spacing: 2px;
         margin: 0;
         color: var(--primary-color);
+        line-height: 1;
+        transition: color var(--transition-slow);
       }
 
       .brand-tagline {
         font-family: "Montserrat", sans-serif;
-        font-size: 12px;
-        letter-spacing: 3px;
+        font-size: 11px;
+        letter-spacing: 4px;
         text-transform: uppercase;
         color: var(--accent-color);
-        margin-top: 15px;
+        margin-top: 20px;
         margin-bottom: 25px;
+        font-weight: 500;
       }
 
       .separator {
-        width: 60px;
-        height: 1px;
+        width: 80px;
+        height: 2px;
         background-color: var(--accent-color);
-        margin: 20px 0 0;
-      }
-
-      /* Carousel Section */
-      .carousel-section {
-        flex: 1;
+        margin: 25px 0 0;
         position: relative;
-        width: 100%;
-        overflow: hidden;
       }
 
-      .swiper {
-        width: 100%;
-        height: 100%;
-        padding-bottom: 50px;
+      .separator::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: -4px;
+        width: 10px;
+        height: 10px;
+        background-color: var(--accent-color);
+        border-radius: 50%;
       }
 
-      .swiper-wrapper {
-        height: 100%;
-      }
-
-      .swiper-slide {
+      .nav-menu {
         display: flex;
-        flex-direction: column;
-        align-items: stretch;
-        justify-content: flex-start;
-        transition: all 0.5s ease;
-        padding: 0 10px;
-        height: 100%;
+        gap: 30px;
+        align-items: center;
       }
 
-      .swiper-slide-active {
+      .nav-item {
+        font-family: "Montserrat", sans-serif;
+        font-size: 12px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--secondary-color);
+        cursor: pointer;
+        transition: color var(--transition-fast);
+        position: relative;
+      }
+
+      .nav-item:hover {
+        color: var(--accent-color);
+      }
+
+      .theme-toggle {
+        background: transparent;
+        border: 2px solid var(--accent-color);
+        border-radius: 50%;
+        width: 45px;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all var(--transition-fast);
+      }
+
+      .theme-toggle:hover {
+        background-color: var(--accent-color);
+      }
+
+      .theme-toggle:hover .material-icons {
+        color: white;
+      }
+
+      .theme-toggle .material-icons {
+        color: var(--accent-color);
+        font-size: 22px;
+        transition: color var(--transition-fast);
+      }
+
+      .horizontal-scroll-gallery {
+        display: flex;
+        gap: 30px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 40px 60px;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: thin;
+        scrollbar-color: var(--accent-color) transparent;
+      }
+
+      .horizontal-scroll-gallery::-webkit-scrollbar {
+        height: 8px;
+      }
+
+      .horizontal-scroll-gallery::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      .horizontal-scroll-gallery::-webkit-scrollbar-thumb {
+        background: var(--accent-color);
+        border-radius: 4px;
+      }
+
+      .dark-mode .horizontal-scroll-gallery::-webkit-scrollbar-thumb {
+        background: var(--accent-color);
+      }
+
+      .photo-tile {
+        flex: 0 0 auto;
+        height: 70vh;
+        scroll-snap-align: center;
+        border-radius: 16px;
+        overflow: hidden;
+        cursor: pointer;
+        transition: transform var(--transition-fast);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+      }
+
+      .photo-tile:hover {
+        transform: scale(1.02);
+        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+      }
+
+      .photo-tile img {
+        height: 100%;
+        width: auto;
+        object-fit: cover;
+        display: block;
+      }
+
+      .lightbox {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.95);
+        backdrop-filter: blur(10px);
+        z-index: 100000;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+      }
+
+      .lightbox.active {
+        display: flex;
         opacity: 1;
+      }
+
+      .lightbox img {
+        max-width: 90%;
+        max-height: 90%;
+        object-fit: contain;
+        border-radius: 4px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        transform: scale(0.9);
+        transition: transform 0.4s ease;
+      }
+
+      .lightbox.active img {
         transform: scale(1);
       }
 
-      .swiper-slide-prev,
-      .swiper-slide-next {
-        opacity: 0.4;
-        filter: grayscale(30%);
-      }
-
-      /* Single Image Layout (Landscape) */
-      .single-image-layout {
-        width: 100%;
-        min-height: 70vh;
-      }
-
-      .single-image-layout .slide-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-      }
-
-      /* Horizontal Image Layout - for 4:3/landscape images */
-      .horizontal-layout {
-        width: 100%;
-        min-height: 60vh;
-      }
-
-      .horizontal-layout .slide-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-      }
-
-      /* Dual Image Layout (Portrait) */
-      .dual-image-layout {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        gap: 15px;
-      }
-
-      .dual-image-layout .image-container {
-        flex: 1;
-        height: 100%;
-        overflow: hidden;
-      }
-
-      .dual-image-layout .slide-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-      }
-
-      .session-info {
-        background-color: rgba(255, 255, 255, 0.95);
-        padding: 20px 40px;
-        margin-top: 20px;
-        position: relative;
-        z-index: 5;
-        width: 100%;
-        text-align: left;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-        flex-shrink: 0;
-      }
-
-      /* Session info below image for horizontal layout */
-      .horizontal-layout + .session-info {
-        opacity: 1;
-        transition: opacity 0.5s ease;
-      }
-
-      /* Session info overlay for vertical/other layouts */
-      .single-image-layout + .session-info {
-        opacity: 1;
-        transition: opacity 0.5s ease;
-      }
-
-      .swiper-slide-prev .session-info,
-      .swiper-slide-next .session-info {
-        opacity: 0;
-      }
-
-      .session-number {
-        font-family: "Cormorant Garamond", serif;
-        font-size: 20px;
-        font-weight: 300;
-        color: var(--accent-color);
-        margin-right: 15px;
-      }
-
-      .session-title {
-        font-family: "Cormorant Garamond", serif;
+      .lightbox-close {
+        position: absolute;
+        top: 30px;
+        right: 30px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border: none;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        color: white;
         font-size: 24px;
-        font-weight: 400;
-        margin: 0;
-        color: var(--primary-color);
-        display: inline-block;
-      }
-
-      .session-meta {
-        font-family: "Montserrat", sans-serif;
-        font-size: 11px;
-        color: var(--secondary-color);
-        margin-top: 10px;
-        text-transform: uppercase;
-        letter-spacing: 1px;
+        cursor: pointer;
+        transition: all var(--transition-fast);
         display: flex;
         align-items: center;
-        justify-content: flex-start;
+        justify-content: center;
       }
 
-      .session-meta i {
-        font-size: 14px;
-        margin-right: 5px;
-        color: var(--accent-color);
-      }
-
-      /* Navigation Buttons */
-      .swiper-button-next,
-      .swiper-button-prev {
-        color: var(--primary-color);
-        background-color: rgba(255, 255, 255, 0.8);
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      }
-
-      .swiper-button-next::after,
-      .swiper-button-prev::after {
-        font-size: 18px;
-        font-weight: bold;
-      }
-
-      .swiper-pagination {
-        bottom: 20px;
-      }
-
-      .swiper-pagination-bullet {
-        width: 8px;
-        height: 8px;
-        background-color: rgba(0, 0, 0, 0.2);
-        opacity: 1;
-      }
-
-      .swiper-pagination-bullet-active {
+      .lightbox-close:hover {
         background-color: var(--accent-color);
       }
 
-      /* Decorative elements */
+      .lightbox-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(255, 255, 255, 0.1);
+        border: none;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+        transition: all var(--transition-fast);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .lightbox-nav:hover {
+        background-color: var(--accent-color);
+      }
+
+      .lightbox-prev {
+        left: 30px;
+      }
+
+      .lightbox-next {
+        right: 30px;
+      }
+
+      .lightbox-counter {
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: white;
+        font-family: "Montserrat", sans-serif;
+        font-size: 14px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+
       .bg-deco {
         position: absolute;
-        width: 250px;
-        height: 250px;
         border-radius: 50%;
-        background: linear-gradient(
-          135deg,
-          rgba(191, 163, 118, 0.08),
-          rgba(255, 255, 255, 0)
-        );
-        filter: blur(50px);
+        filter: blur(80px);
         z-index: 0;
       }
 
       .deco-1 {
-        top: 100px;
-        left: -60px;
+        width: 350px;
+        height: 350px;
+        background: linear-gradient(
+          135deg,
+          rgba(201, 168, 124, 0.15),
+          rgba(255, 255, 255, 0)
+        );
+        top: -100px;
+        left: -100px;
       }
+
       .deco-2 {
-        bottom: 200px;
-        right: -50px;
-        width: 200px;
-        height: 200px;
+        width: 300px;
+        height: 300px;
+        background: linear-gradient(
+          135deg,
+          rgba(201, 168, 124, 0.1),
+          rgba(255, 255, 255, 0)
+        );
+        bottom: 100px;
+        right: -80px;
       }
 
-      /* Image overlay for better text readability */
-      .image-overlay {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 150px;
-        background: linear-gradient(to top, rgba(0, 0, 0, 0.2), transparent);
-        pointer-events: none;
+      .dark-mode .deco-1,
+      .dark-mode .deco-2 {
+        background: linear-gradient(
+          135deg,
+          rgba(201, 168, 124, 0.08),
+          rgba(0, 0, 0, 0)
+        );
       }
 
-      /* Effect for preview slides */
-      .swiper-slide-active {
-        z-index: 3;
+      .footer {
+        padding: 30px 60px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 10;
+        position: relative;
+        margin-top: 60px;
       }
 
-      .swiper-slide-prev,
-      .swiper-slide-next {
-        z-index: 1;
+      .copyright {
+        font-family: "Montserrat", sans-serif;
+        font-size: 11px;
+        color: var(--secondary-color);
+        letter-spacing: 1px;
+      }
+
+      .social-icons {
+        display: flex;
+        gap: 20px;
+        color: var(--secondary-color);
+        cursor: pointer;
+      }
+
+      .social-icons i {
+        font-size: 20px;
+        transition:
+          color var(--transition-fast),
+          transform var(--transition-fast);
+      }
+
+      .social-icons i:hover {
+        color: var(--accent-color);
+        transform: translateY(-3px);
+      }
+
+      @media (max-width: 768px) {
+        .header {
+          padding: 40px 30px 20px;
+          flex-direction: column;
+        }
+
+        .header.scrolled {
+          padding: 25px 30px 15px;
+        }
+
+        .brand-name {
+          font-size: 42px;
+        }
+
+        .nav-menu {
+          margin-top: 20px;
+        }
+
+        .horizontal-scroll-gallery {
+          padding: 30px 20px;
+          gap: 15px;
+        }
+
+        .photo-tile {
+          height: 50vh;
+        }
+
+        .footer {
+          padding: 25px 30px;
+          flex-direction: column;
+          gap: 20px;
+        }
+
+        .lightbox-close,
+        .lightbox-nav {
+          width: 40px;
+          height: 40px;
+          font-size: 20px;
+        }
+
+        .lightbox-close {
+          top: 20px;
+          right: 20px;
+        }
+
+        .lightbox-nav {
+          width: 40px;
+          height: 40px;
+        }
+
+        .lightbox-prev {
+          left: 10px;
+        }
+
+        .lightbox-next {
+          right: 10px;
+        }
       }
     </style>
   </head>
   <body>
+    <div class="loading-screen" id="loadingScreen">
+      <div class="loading-logo">ROMAN KOZYREV</div>
+      <div class="loading-bar">
+        <div class="loading-progress"></div>
+      </div>
+    </div>
+
+    <div class="scroll-progress" id="scrollProgress"></div>
+
     <div class="poster-container">
-      <!-- Background Decorations -->
       <div class="bg-deco deco-1"></div>
       <div class="bg-deco deco-2"></div>
 
-      <!-- Header -->
-      <header class="header">
-        <h1 class="brand-name">ROMAN KOZYREV</h1>
-        <div class="brand-tagline">Portrait & Fine Art Photography</div>
-        <div class="separator"></div>
+      <header class="header" id="header">
+        <div class="brand-info">
+          <h1 class="brand-name animate-slide-up">ROMAN KOZYREV</h1>
+          <div class="brand-tagline animate-slide-up delay-100">
+            Portrait & Fine Art Photography
+          </div>
+          <div class="separator animate-slide-up delay-200"></div>
+        </div>
+        <nav class="nav-menu animate-slide-up delay-300">
+          <div class="nav-item">Portfolio</div>
+          <div class="nav-item">About</div>
+          <div class="nav-item">Contact</div>
+          <button class="theme-toggle" id="themeToggle">
+            <i class="material-icons" id="themeIcon">dark_mode</i>
+          </button>
+        </nav>
       </header>
 
-      <!-- Carousel Section -->
-      <div class="carousel-section">
-        <div class="swiper mySwiper">
-          <div class="swiper-wrapper">
-            <!-- Slide 1 -->
-            <div class="swiper-slide">
-              <div class="horizontal-layout">
-                <img
-                  src="IMG_4542.JPG"
-                  alt="Morning Bloom"
-                  class="slide-image"
-                />
-                <div class="image-overlay"></div>
-              </div>
-              <div class="session-info">
-                <span class="session-number">01</span>
-                <h2 class="session-title">Morning Bloom</h2>
-                <div class="session-meta">
-                  <i class="material-icons">local_florist</i>
-                  Nature vibes
-                </div>
-              </div>
-            </div>
-
-            <!-- Slide 2 -->
-            <div class="swiper-slide">
-              <div class="horizontal-layout">
-                <img
-                  src="IMG_4670.JPG"
-                  alt="Flower Power"
-                  class="slide-image"
-                />
-                <div class="image-overlay"></div>
-              </div>
-              <div class="session-info">
-                <span class="session-number">02</span>
-                <h2 class="session-title">Flower Power</h2>
-                <div class="session-meta">
-                  <i class="material-icons">park</i>
-                  Golden hour fun
-                </div>
-              </div>
-            </div>
-
-            <!-- Slide 3 -->
-            <div class="swiper-slide">
-              <div class="single-image-layout">
-                <img
-                  src="IMG_4695.JPG"
-                  alt="Garden Girl"
-                  class="slide-image"
-                />
-                <div class="image-overlay"></div>
-              </div>
-              <div class="session-info">
-                <span class="session-number">03</span>
-                <h2 class="session-title">Garden Girl</h2>
-                <div class="session-meta">
-                  <i class="material-icons">wb_sunny</i>
-                  Sun-kissed moments
-                </div>
-              </div>
-            </div>
-
-            <!-- Slide 4 -->
-            <div class="swiper-slide">
-              <div class="single-image-layout">
-                <img
-                  src="IMG_4708.JPG"
-                  alt="Wildflower Magic"
-                  class="slide-image"
-                />
-                <div class="image-overlay"></div>
-              </div>
-              <div class="session-info">
-                <span class="session-number">04</span>
-                <h2 class="session-title">Wildflower Magic</h2>
-                <div class="session-meta">
-                  <i class="material-icons">nature</i>
-                  Just vibing in nature
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-pagination"></div>
-          <div class="swiper-button-next"></div>
-          <div class="swiper-button-prev"></div>
+      <div class="horizontal-scroll-gallery animate-slide-up">
+        <div class="photo-tile">
+          <img src="IMG_4670.JPG" alt="Photo 1" data-lightbox="true" />
+        </div>
+        <div class="photo-tile">
+          <img src="IMG_4708.JPG" alt="Photo 5" data-lightbox="true" />
+        </div>
+        <div class="photo-tile">
+          <img src="IMG_4542.JPG" alt="Photo 2" data-lightbox="true" />
         </div>
       </div>
 
+      <div class="horizontal-scroll-gallery animate-slide-up">
+        <div class="photo-tile">
+          <img src="1000003075%20(1).jpg" alt="Photo 8" data-lightbox="true" />
+        </div>
+        <div class="photo-tile">
+          <img src="IMG_2703.JPG" alt="Photo 3" data-lightbox="true" />
+        </div>
+        <div class="photo-tile">
+          <img src="1000002901.jpg" alt="Photo 7" data-lightbox="true" />
+        </div>
+      </div>
 
+      <footer class="footer">
+        <div class="copyright">© 2025 Roman Kozyrev. All rights reserved.</div>
+        <div class="social-icons">
+          <i class="material-icons">camera_alt</i>
+          <i class="material-icons">public</i>
+          <i class="material-icons">email</i>
+        </div>
+      </footer>
+    </div>
+
+    <div class="lightbox" id="lightbox">
+      <button class="lightbox-close" id="lightboxClose">✕</button>
+      <button class="lightbox-nav lightbox-prev" id="lightboxPrev">‹</button>
+      <button class="lightbox-nav lightbox-next" id="lightboxNext">›</button>
+      <img src="" alt="Lightbox Image" id="lightboxImage" />
+      <div class="lightbox-counter" id="lightboxCounter">1 / 9</div>
     </div>
 
     <script>
-      var swiper = new Swiper(".mySwiper", {
-        slidesPerView: 1.2, // Show parts of adjacent slides
-        centeredSlides: true, // Center the active slide
-        spaceBetween: 20,
-        loop: true,
-        pagination: {
-          el: ".swiper-pagination",
-          clickable: true,
-        },
-        navigation: {
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev",
-        },
-        autoplay: {
-          delay: 5000,
-          disableOnInteraction: false,
-        },
-        effect: "slide", // Slide effect for better transition between layouts
-        speed: 600, // Transition speed
+      document.addEventListener("DOMContentLoaded", function () {
+        setTimeout(() => {
+          const loadingScreen = document.getElementById("loadingScreen");
+          loadingScreen.classList.add("hidden");
+          document.querySelectorAll(".animate-slide-up").forEach((el) => {
+            el.style.opacity = "1";
+          });
+        }, 2200);
+      });
+
+      const themeToggle = document.getElementById("themeToggle");
+      const themeIcon = document.getElementById("themeIcon");
+      const body = document.body;
+
+      themeToggle.addEventListener("click", () => {
+        body.classList.toggle("dark-mode");
+        if (body.classList.contains("dark-mode")) {
+          themeIcon.textContent = "light_mode";
+        } else {
+          themeIcon.textContent = "dark_mode";
+        }
+      });
+
+      const header = document.getElementById("header");
+
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 100) {
+          header.classList.add("scrolled");
+        } else {
+          header.classList.remove("scrolled");
+        }
+      });
+
+      const scrollProgress = document.getElementById("scrollProgress");
+
+      window.addEventListener("scroll", () => {
+        const windowHeight =
+          document.documentElement.scrollHeight - window.innerHeight;
+        const scrolled = (window.scrollY / windowHeight) * 100;
+        scrollProgress.style.width = scrolled + "%";
+      });
+
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px",
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+          }
+        });
+      }, observerOptions);
+
+      document
+        .querySelectorAll(
+          ".animate-slide-up, .animate-fade-in, .animate-zoom-in",
+        )
+        .forEach((el) => {
+          observer.observe(el);
+        });
+
+      const lightbox = document.getElementById("lightbox");
+      const lightboxImage = document.getElementById("lightboxImage");
+      const lightboxClose = document.getElementById("lightboxClose");
+      const lightboxPrev = document.getElementById("lightboxPrev");
+      const lightboxNext = document.getElementById("lightboxNext");
+      const lightboxCounter = document.getElementById("lightboxCounter");
+
+      let lightboxImages = [];
+      let currentLightboxIndex = 0;
+
+      function openLightbox(src, index, images) {
+        lightboxImages = images;
+        currentLightboxIndex = index;
+        lightboxImage.src = src;
+        lightboxCounter.textContent = `${index + 1} / ${images.length}`;
+        lightbox.classList.add("active");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeLightbox() {
+        lightbox.classList.remove("active");
+        document.body.style.overflow = "";
+      }
+
+      function navigateLightbox(direction) {
+        currentLightboxIndex += direction;
+        if (currentLightboxIndex < 0) {
+          currentLightboxIndex = lightboxImages.length - 1;
+        } else if (currentLightboxIndex >= lightboxImages.length) {
+          currentLightboxIndex = 0;
+        }
+        lightboxImage.src = lightboxImages[currentLightboxIndex];
+        lightboxCounter.textContent = `${currentLightboxIndex + 1} / ${lightboxImages.length}`;
+      }
+
+      const lightboxEnabledImages = document.querySelectorAll(
+        "[data-lightbox='true']",
+      );
+      const lightboxImageArray = Array.from(lightboxEnabledImages).map(
+        (img) => img.src,
+      );
+
+      lightboxEnabledImages.forEach((img, index) => {
+        img.addEventListener("click", () => {
+          openLightbox(img.src, index, lightboxImageArray);
+        });
+      });
+
+      lightboxClose.addEventListener("click", closeLightbox);
+      lightboxPrev.addEventListener("click", () => navigateLightbox(-1));
+      lightboxNext.addEventListener("click", () => navigateLightbox(1));
+
+      document.addEventListener("keydown", (e) => {
+        if (!lightbox.classList.contains("active")) return;
+
+        if (e.key === "Escape") closeLightbox();
+        if (e.key === "ArrowLeft") navigateLightbox(-1);
+        if (e.key === "ArrowRight") navigateLightbox(1);
+      });
+
+      lightbox.addEventListener("click", (e) => {
+        if (e.target === lightbox) closeLightbox();
       });
     </script>
   </body>
