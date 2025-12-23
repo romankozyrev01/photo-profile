@@ -12,6 +12,11 @@
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
     />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
     <style>
       :root {
         --primary-color: #2c2c2c;
@@ -27,14 +32,12 @@
         background-color: var(--bg-color);
         font-family: "Montserrat", sans-serif;
         color: var(--primary-color);
-        display: flex;
-        justify-content: center;
         min-height: 100vh;
       }
 
       .poster-container {
-        width: 720px;
-        min-height: 960px;
+        width: 100%;
+        min-height: 100vh;
         background-color: var(--bg-color);
         position: relative;
         overflow: hidden;
@@ -45,10 +48,11 @@
 
       /* Header Section */
       .header {
-        padding: 60px 50px 30px;
-        text-align: center;
+        padding: 40px 50px 20px;
+        text-align: left;
         background-color: transparent;
-        z-index: 2;
+        z-index: 10;
+        position: relative;
       }
 
       .brand-name {
@@ -74,34 +78,131 @@
         width: 60px;
         height: 1px;
         background-color: var(--accent-color);
-        margin: 20px auto 0;
+        margin: 20px 0 0;
       }
 
-      /* Content Wrapper */
-      .content-wrapper {
-        padding: 20px 50px 40px;
+      /* Carousel Section */
+      .carousel-section {
         flex: 1;
-        display: flex;
-        flex-direction: column;
-        gap: 45px;
+        position: relative;
+        width: 100%;
+        overflow: hidden;
       }
 
-      /* Session Section */
-      .session-section {
-        background-color: transparent;
+      .swiper {
+        width: 100%;
+        height: 100%;
+        padding-bottom: 50px;
       }
 
-      .session-header {
+      .swiper-wrapper {
+        height: 100%;
+      }
+
+      .swiper-slide {
         display: flex;
-        align-items: baseline;
-        margin-bottom: 18px;
-        border-bottom: 1px solid #e8e8e8;
-        padding-bottom: 8px;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.5s ease;
+        padding: 0 10px;
+        height: 100%;
+      }
+
+      .swiper-slide-active {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      .swiper-slide-prev,
+      .swiper-slide-next {
+        opacity: 0.4;
+        filter: grayscale(30%);
+      }
+
+      /* Single Image Layout (Landscape) */
+      .single-image-layout {
+        width: 100%;
+        height: 100%;
+      }
+
+      .single-image-layout .slide-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      /* Horizontal Image Layout - for 4:3/landscape images */
+      .horizontal-layout {
+        width: 100%;
+        height: 85%;
+      }
+
+      .horizontal-layout .slide-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      /* Dual Image Layout (Portrait) */
+      .dual-image-layout {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        gap: 15px;
+      }
+
+      .dual-image-layout .image-container {
+        flex: 1;
+        height: 100%;
+        overflow: hidden;
+      }
+
+      .dual-image-layout .slide-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      .session-info {
+        background-color: rgba(255, 255, 255, 0.95);
+        padding: 20px 40px;
+        margin-top: -1px;
+        position: relative;
+        z-index: 5;
+        width: 100%;
+        text-align: left;
+        box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.05);
+        flex-shrink: 0;
+      }
+
+      /* Session info below image for horizontal layout */
+      .horizontal-layout + .session-info {
+        margin-top: 20px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        opacity: 1;
+        transition: opacity 0.5s ease;
+      }
+
+      /* Session info overlay for vertical/other layouts */
+      .single-image-layout + .session-info {
+        margin-top: -1px;
+        box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.05);
+        opacity: 1;
+        transition: opacity 0.5s ease;
+      }
+
+      .swiper-slide-prev .session-info,
+      .swiper-slide-next .session-info {
+        opacity: 0;
       }
 
       .session-number {
         font-family: "Cormorant Garamond", serif;
-        font-size: 28px;
+        font-size: 20px;
         font-weight: 300;
         color: var(--accent-color);
         margin-right: 15px;
@@ -109,21 +210,23 @@
 
       .session-title {
         font-family: "Cormorant Garamond", serif;
-        font-size: 22px;
+        font-size: 24px;
         font-weight: 400;
         margin: 0;
         color: var(--primary-color);
+        display: inline-block;
       }
 
       .session-meta {
         font-family: "Montserrat", sans-serif;
-        font-size: 10px;
+        font-size: 11px;
         color: var(--secondary-color);
-        margin-left: auto;
+        margin-top: 10px;
         text-transform: uppercase;
         letter-spacing: 1px;
         display: flex;
         align-items: center;
+        justify-content: flex-start;
       }
 
       .session-meta i {
@@ -132,129 +235,36 @@
         color: var(--accent-color);
       }
 
-      /* Gallery Layout */
-      .gallery-container {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-      }
-
-      .gallery-row {
-        display: flex;
-        gap: 15px;
-        align-items: center;
-      }
-
-      .photo-card {
-        background-color: var(--card-bg);
-        padding: 6px;
-        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
-        transition: transform 0.3s ease;
-        position: relative;
-      }
-
-      .photo-card:hover {
-        transform: translateY(-3px);
-      }
-
-      .photo-card.main-portrait {
-        flex: 2;
-        padding: 8px;
-      }
-
-      .photo-card.secondary {
-        flex: 1;
-      }
-
-      .photo-card img {
-        width: 100%;
-        height: auto;
-        display: block;
-        object-fit: cover;
-      }
-
-      .photo-card.tall img {
-        height: 320px;
-      }
-
-      .photo-card.main-portrait img {
-        height: 380px;
-      }
-
-      .photo-card.secondary img {
-        height: 180px;
-      }
-
-      /* Client Testimonial */
-      .testimonial-box {
-        background-color: white;
-        padding: 25px;
-        position: relative;
-        margin-top: 10px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
-        border-left: 2px solid var(--accent-color);
-      }
-
-      .testimonial-quote {
-        font-family: "Montserrat", sans-serif;
-        font-style: italic;
-        font-size: 13px;
-        line-height: 1.6;
-        color: #555;
-      }
-
-      .testimonial-author {
-        font-family: "Montserrat", sans-serif;
-        font-size: 11px;
-        font-weight: 600;
+      /* Navigation Buttons */
+      .swiper-button-next,
+      .swiper-button-prev {
         color: var(--primary-color);
-        margin-top: 15px;
-        text-transform: uppercase;
-        letter-spacing: 1px;
+        background-color: rgba(255, 255, 255, 0.8);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
       }
 
-      /* Footer */
-      .footer {
-        text-align: center;
-        padding: 30px 50px 50px;
-        background-color: transparent;
-        margin-top: auto;
-      }
-
-      .contact-info {
-        font-family: "Cormorant Garamond", serif;
+      .swiper-button-next::after,
+      .swiper-button-prev::after {
         font-size: 18px;
-        margin-bottom: 20px;
-        color: var(--secondary-color);
+        font-weight: bold;
       }
 
-      .social-icons {
-        display: flex;
-        justify-content: center;
-        gap: 25px;
+      .swiper-pagination {
+        bottom: 20px;
       }
 
-      .social-icons i {
-        font-size: 20px;
-        color: var(--primary-color);
+      .swiper-pagination-bullet {
+        width: 8px;
+        height: 8px;
+        background-color: rgba(0, 0, 0, 0.2);
+        opacity: 1;
       }
 
-      .view-all-btn {
-        display: inline-block;
-        padding: 12px 35px;
-        border: 1px solid var(--primary-color);
-        color: var(--primary-color);
-        font-family: "Montserrat", sans-serif;
-        font-size: 11px;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        margin-bottom: 25px;
-        transition: all 0.3s;
-      }
-
-      .view-all-btn:hover {
-        background-color: var(--primary-color);
-        color: white;
+      .swiper-pagination-bullet-active {
+        background-color: var(--accent-color);
       }
 
       /* Decorative elements */
@@ -277,10 +287,31 @@
         left: -60px;
       }
       .deco-2 {
-        bottom: 150px;
+        bottom: 200px;
         right: -50px;
         width: 200px;
         height: 200px;
+      }
+
+      /* Image overlay for better text readability */
+      .image-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 150px;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.2), transparent);
+        pointer-events: none;
+      }
+
+      /* Effect for preview slides */
+      .swiper-slide-active {
+        z-index: 3;
+      }
+
+      .swiper-slide-prev,
+      .swiper-slide-next {
+        z-index: 1;
       }
     </style>
   </head>
@@ -292,114 +323,125 @@
 
       <!-- Header -->
       <header class="header">
-        <h1 class="brand-name">SOPHIA RAY</h1>
+        <h1 class="brand-name">ROMAN KOZYREV</h1>
         <div class="brand-tagline">Portrait & Fine Art Photography</div>
         <div class="separator"></div>
       </header>
 
-      <!-- Content -->
-      <div class="content-wrapper">
-        <!-- Session 1: Executive -->
-        <section class="session-section">
-          <div class="session-header">
-            <span class="session-number">01</span>
-            <h2 class="session-title">Executive Portraits</h2>
-            <div class="session-meta">
-              <i class="material-icons">business</i>
-              Corporate, NYC
-            </div>
-          </div>
-          <div class="gallery-container">
-            <div class="gallery-row">
-              <div class="photo-card main-portrait tall">
+      <!-- Carousel Section -->
+      <div class="carousel-section">
+        <div class="swiper mySwiper">
+          <div class="swiper-wrapper">
+            <!-- Slide 1 -->
+            <div class="swiper-slide">
+              <div class="horizontal-layout">
                 <img
-                  src="https://sfile.chatglm.cn/images-ppt/367b109c2912.jpg"
-                  alt="Professional portrait in kitchen"
+                  src="IMG_4542.JPG"
+                  alt="Morning Bloom"
+                  class="slide-image"
                 />
+                <div class="image-overlay"></div>
               </div>
-              <div class="photo-card secondary tall">
-                <img
-                  src="https://sfile.chatglm.cn/images-ppt/84b23c411a51.jpg"
-                  alt="Outdoor profile"
-                />
+              <div class="session-info">
+                <span class="session-number">01</span>
+                <h2 class="session-title">Morning Bloom</h2>
+                <div class="session-meta">
+                  <i class="material-icons">local_florist</i>
+                  Nature vibes
+                </div>
               </div>
             </div>
-          </div>
-        </section>
 
-        <!-- Session 2: Family -->
-        <section class="session-section">
-          <div class="session-header">
-            <span class="session-number">02</span>
-            <h2 class="session-title">The Johnson Family</h2>
-            <div class="session-meta">
-              <i class="material-icons">family_restroom</i>
-              Lifestyle, CA
-            </div>
-          </div>
-          <div class="gallery-container">
-            <div class="gallery-row">
-              <div class="photo-card secondary" style="flex: 1.5">
+            <!-- Slide 2 -->
+            <div class="swiper-slide">
+              <div class="horizontal-layout">
                 <img
-                  src="https://sfile.chatglm.cn/images-ppt/286528903edd.jpg"
-                  alt="Family outdoors"
+                  src="IMG_4670.JPG"
+                  alt="Flower Power"
+                  class="slide-image"
                 />
+                <div class="image-overlay"></div>
               </div>
-              <div class="photo-card secondary">
-                <img
-                  src="https://sfile.chatglm.cn/images-ppt/4cb96ba56c88.jpg"
-                  alt="Candid moment"
-                />
-              </div>
-              <div class="photo-card secondary">
-                <img
-                  src="https://sfile.chatglm.cn/images-ppt/6da90df08adc.jpg"
-                  alt="Close up"
-                />
+              <div class="session-info">
+                <span class="session-number">02</span>
+                <h2 class="session-title">Flower Power</h2>
+                <div class="session-meta">
+                  <i class="material-icons">park</i>
+                  Golden hour fun
+                </div>
               </div>
             </div>
-          </div>
-        </section>
 
-        <!-- Session 3: Artist -->
-        <section class="session-section">
-          <div class="session-header">
-            <span class="session-number">03</span>
-            <h2 class="session-title">Artist Series</h2>
-            <div class="session-meta">
-              <i class="material-icons">palette</i>
-              Editorial, Studio
-            </div>
-          </div>
-          <div class="gallery-container">
-            <div class="gallery-row">
-              <div class="photo-card secondary">
+            <!-- Slide 3 -->
+            <div class="swiper-slide">
+              <div class="single-image-layout">
                 <img
-                  src="https://sfile.chatglm.cn/images-ppt/7eb19c38c7c3.jpg"
-                  alt="Creative portrait"
+                  src="IMG_4695.JPG"
+                  alt="Garden Girl"
+                  class="slide-image"
                 />
+                <div class="image-overlay"></div>
               </div>
-              <div class="photo-card main-portrait">
-                <img
-                  src="https://sfile.chatglm.cn/images-ppt/ca3b7e33616c.jpg"
-                  alt="Artistic profile"
-                />
+              <div class="session-info">
+                <span class="session-number">03</span>
+                <h2 class="session-title">Garden Girl</h2>
+                <div class="session-meta">
+                  <i class="material-icons">wb_sunny</i>
+                  Sun-kissed moments
+                </div>
               </div>
             </div>
+
+            <!-- Slide 4 -->
+            <div class="swiper-slide">
+              <div class="single-image-layout">
+                <img
+                  src="IMG_4708.JPG"
+                  alt="Wildflower Magic"
+                  class="slide-image"
+                />
+                <div class="image-overlay"></div>
+              </div>
+              <div class="session-info">
+                <span class="session-number">04</span>
+                <h2 class="session-title">Wildflower Magic</h2>
+                <div class="session-meta">
+                  <i class="material-icons">nature</i>
+                  Just vibing in nature
+                </div>
+              </div>
+            </div>
           </div>
-        </section>
+          <div class="swiper-pagination"></div>
+          <div class="swiper-button-next"></div>
+          <div class="swiper-button-prev"></div>
+        </div>
       </div>
 
-      <!-- Footer -->
-      <footer class="footer">
-        <div class="contact-info">hello@sophiaray.com</div>
-        <div class="view-all-btn">View Full Portfolio</div>
-        <div class="social-icons">
-          <i class="material-icons">facebook</i>
-          <i class="material-icons">photo_camera</i>
-          <i class="material-icons">email</i>
-        </div>
-      </footer>
+
     </div>
+
+    <script>
+      var swiper = new Swiper(".mySwiper", {
+        slidesPerView: 1.2, // Show parts of adjacent slides
+        centeredSlides: true, // Center the active slide
+        spaceBetween: 20,
+        loop: true,
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+        autoplay: {
+          delay: 5000,
+          disableOnInteraction: false,
+        },
+        effect: "slide", // Slide effect for better transition between layouts
+        speed: 600, // Transition speed
+      });
+    </script>
   </body>
 </html>
