@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portrait Photography Portfolio</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Montserrat:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-color: #2c2c2c;
+        --secondary-color: #5c5c5c;
+        --accent-color: #bfa376;
+        --bg-color: #f9f8f6;
+        --card-bg: #ffffff;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-color);
+        font-family: "Montserrat", sans-serif;
+        color: var(--primary-color);
+        display: flex;
+        justify-content: center;
+        min-height: 100vh;
+      }
+
+      .poster-container {
+        width: 720px;
+        min-height: 960px;
+        background-color: var(--bg-color);
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Header Section */
+      .header {
+        padding: 60px 50px 30px;
+        text-align: center;
+        background-color: transparent;
+        z-index: 2;
+      }
+
+      .brand-name {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 52px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        margin: 0;
+        color: var(--primary-color);
+      }
+
+      .brand-tagline {
+        font-family: "Montserrat", sans-serif;
+        font-size: 12px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--accent-color);
+        margin-top: 15px;
+        margin-bottom: 25px;
+      }
+
+      .separator {
+        width: 60px;
+        height: 1px;
+        background-color: var(--accent-color);
+        margin: 20px auto 0;
+      }
+
+      /* Content Wrapper */
+      .content-wrapper {
+        padding: 20px 50px 40px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 45px;
+      }
+
+      /* Session Section */
+      .session-section {
+        background-color: transparent;
+      }
+
+      .session-header {
+        display: flex;
+        align-items: baseline;
+        margin-bottom: 18px;
+        border-bottom: 1px solid #e8e8e8;
+        padding-bottom: 8px;
+      }
+
+      .session-number {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 28px;
+        font-weight: 300;
+        color: var(--accent-color);
+        margin-right: 15px;
+      }
+
+      .session-title {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 22px;
+        font-weight: 400;
+        margin: 0;
+        color: var(--primary-color);
+      }
+
+      .session-meta {
+        font-family: "Montserrat", sans-serif;
+        font-size: 10px;
+        color: var(--secondary-color);
+        margin-left: auto;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        display: flex;
+        align-items: center;
+      }
+
+      .session-meta i {
+        font-size: 14px;
+        margin-right: 5px;
+        color: var(--accent-color);
+      }
+
+      /* Gallery Layout */
+      .gallery-container {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .gallery-row {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+      }
+
+      .photo-card {
+        background-color: var(--card-bg);
+        padding: 6px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+        transition: transform 0.3s ease;
+        position: relative;
+      }
+
+      .photo-card:hover {
+        transform: translateY(-3px);
+      }
+
+      .photo-card.main-portrait {
+        flex: 2;
+        padding: 8px;
+      }
+
+      .photo-card.secondary {
+        flex: 1;
+      }
+
+      .photo-card img {
+        width: 100%;
+        height: auto;
+        display: block;
+        object-fit: cover;
+      }
+
+      .photo-card.tall img {
+        height: 320px;
+      }
+
+      .photo-card.main-portrait img {
+        height: 380px;
+      }
+
+      .photo-card.secondary img {
+        height: 180px;
+      }
+
+      /* Client Testimonial */
+      .testimonial-box {
+        background-color: white;
+        padding: 25px;
+        position: relative;
+        margin-top: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+        border-left: 2px solid var(--accent-color);
+      }
+
+      .testimonial-quote {
+        font-family: "Montserrat", sans-serif;
+        font-style: italic;
+        font-size: 13px;
+        line-height: 1.6;
+        color: #555;
+      }
+
+      .testimonial-author {
+        font-family: "Montserrat", sans-serif;
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--primary-color);
+        margin-top: 15px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      /* Footer */
+      .footer {
+        text-align: center;
+        padding: 30px 50px 50px;
+        background-color: transparent;
+        margin-top: auto;
+      }
+
+      .contact-info {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 18px;
+        margin-bottom: 20px;
+        color: var(--secondary-color);
+      }
+
+      .social-icons {
+        display: flex;
+        justify-content: center;
+        gap: 25px;
+      }
+
+      .social-icons i {
+        font-size: 20px;
+        color: var(--primary-color);
+      }
+
+      .view-all-btn {
+        display: inline-block;
+        padding: 12px 35px;
+        border: 1px solid var(--primary-color);
+        color: var(--primary-color);
+        font-family: "Montserrat", sans-serif;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 25px;
+        transition: all 0.3s;
+      }
+
+      .view-all-btn:hover {
+        background-color: var(--primary-color);
+        color: white;
+      }
+
+      /* Decorative elements */
+      .bg-deco {
+        position: absolute;
+        width: 250px;
+        height: 250px;
+        border-radius: 50%;
+        background: linear-gradient(
+          135deg,
+          rgba(191, 163, 118, 0.08),
+          rgba(255, 255, 255, 0)
+        );
+        filter: blur(50px);
+        z-index: 0;
+      }
+
+      .deco-1 {
+        top: 100px;
+        left: -60px;
+      }
+      .deco-2 {
+        bottom: 150px;
+        right: -50px;
+        width: 200px;
+        height: 200px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="poster-container">
+      <!-- Background Decorations -->
+      <div class="bg-deco deco-1"></div>
+      <div class="bg-deco deco-2"></div>
+
+      <!-- Header -->
+      <header class="header">
+        <h1 class="brand-name">SOPHIA RAY</h1>
+        <div class="brand-tagline">Portrait & Fine Art Photography</div>
+        <div class="separator"></div>
+      </header>
+
+      <!-- Content -->
+      <div class="content-wrapper">
+        <!-- Session 1: Executive -->
+        <section class="session-section">
+          <div class="session-header">
+            <span class="session-number">01</span>
+            <h2 class="session-title">Executive Portraits</h2>
+            <div class="session-meta">
+              <i class="material-icons">business</i>
+              Corporate, NYC
+            </div>
+          </div>
+          <div class="gallery-container">
+            <div class="gallery-row">
+              <div class="photo-card main-portrait tall">
+                <img
+                  src="https://sfile.chatglm.cn/images-ppt/367b109c2912.jpg"
+                  alt="Professional portrait in kitchen"
+                />
+              </div>
+              <div class="photo-card secondary tall">
+                <img
+                  src="https://sfile.chatglm.cn/images-ppt/84b23c411a51.jpg"
+                  alt="Outdoor profile"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Session 2: Family -->
+        <section class="session-section">
+          <div class="session-header">
+            <span class="session-number">02</span>
+            <h2 class="session-title">The Johnson Family</h2>
+            <div class="session-meta">
+              <i class="material-icons">family_restroom</i>
+              Lifestyle, CA
+            </div>
+          </div>
+          <div class="gallery-container">
+            <div class="gallery-row">
+              <div class="photo-card secondary" style="flex: 1.5">
+                <img
+                  src="https://sfile.chatglm.cn/images-ppt/286528903edd.jpg"
+                  alt="Family outdoors"
+                />
+              </div>
+              <div class="photo-card secondary">
+                <img
+                  src="https://sfile.chatglm.cn/images-ppt/4cb96ba56c88.jpg"
+                  alt="Candid moment"
+                />
+              </div>
+              <div class="photo-card secondary">
+                <img
+                  src="https://sfile.chatglm.cn/images-ppt/6da90df08adc.jpg"
+                  alt="Close up"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Session 3: Artist -->
+        <section class="session-section">
+          <div class="session-header">
+            <span class="session-number">03</span>
+            <h2 class="session-title">Artist Series</h2>
+            <div class="session-meta">
+              <i class="material-icons">palette</i>
+              Editorial, Studio
+            </div>
+          </div>
+          <div class="gallery-container">
+            <div class="gallery-row">
+              <div class="photo-card secondary">
+                <img
+                  src="https://sfile.chatglm.cn/images-ppt/7eb19c38c7c3.jpg"
+                  alt="Creative portrait"
+                />
+              </div>
+              <div class="photo-card main-portrait">
+                <img
+                  src="https://sfile.chatglm.cn/images-ppt/ca3b7e33616c.jpg"
+                  alt="Artistic profile"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="contact-info">hello@sophiaray.com</div>
+        <div class="view-all-btn">View Full Portfolio</div>
+        <div class="social-icons">
+          <i class="material-icons">facebook</i>
+          <i class="material-icons">photo_camera</i>
+          <i class="material-icons">email</i>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
