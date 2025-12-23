@@ -101,9 +101,9 @@
 
       .swiper-slide {
         display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
         transition: all 0.5s ease;
         padding: 0 10px;
         height: 100%;
@@ -123,7 +123,7 @@
       /* Single Image Layout (Landscape) */
       .single-image-layout {
         width: 100%;
-        height: 100%;
+        min-height: 70vh;
       }
 
       .single-image-layout .slide-image {
@@ -136,7 +136,7 @@
       /* Horizontal Image Layout - for 4:3/landscape images */
       .horizontal-layout {
         width: 100%;
-        height: 85%;
+        min-height: 60vh;
       }
 
       .horizontal-layout .slide-image {
@@ -170,27 +170,23 @@
       .session-info {
         background-color: rgba(255, 255, 255, 0.95);
         padding: 20px 40px;
-        margin-top: -1px;
+        margin-top: 20px;
         position: relative;
         z-index: 5;
         width: 100%;
         text-align: left;
-        box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
         flex-shrink: 0;
       }
 
       /* Session info below image for horizontal layout */
       .horizontal-layout + .session-info {
-        margin-top: 20px;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
         opacity: 1;
         transition: opacity 0.5s ease;
       }
 
       /* Session info overlay for vertical/other layouts */
       .single-image-layout + .session-info {
-        margin-top: -1px;
-        box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.05);
         opacity: 1;
         transition: opacity 0.5s ease;
       }
